@@ -8,23 +8,21 @@ using Microsoft.Extensions.Logging;
 
 namespace BGTaskDemo
 {
-    public class MeetingPipeline : IHostedService, IDisposable
+    public class MeetingPipeline : IPipeline
     {
         private Timer timer;
 
-        // had to implement this to dispose the timer
         public void Dispose()
         {
             timer?.Dispose();
         }
 
-        // on service start
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            Worker worker = new Worker(); // our worker class for the pipeline
+            MeetingsWorker worker = new MeetingsWorker(); 
 
             timer = new Timer(o =>
-                { // Callback for the timer
+                {
                     if (worker.ShouldRun())
                     {
                         worker.DoWork("Meeting");
@@ -34,17 +32,15 @@ namespace BGTaskDemo
                         Console.WriteLine("Not time to work Meetings");
                     }
                 },
-                null, // not sure but example said leave null
-                TimeSpan.Zero, // basically means start immediately 
-                TimeSpan.FromSeconds(1) // How often should we check for work? 
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(1)
             );
             return Task.CompletedTask;
         }
 
-        // on service stop 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            // just logging that the service stopped for now 
             Console.WriteLine("Printing worker stopped");
             return Task.CompletedTask;
         }

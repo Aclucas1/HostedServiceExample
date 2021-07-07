@@ -14,7 +14,7 @@ namespace BGTaskDemo
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
-                    services.AddHostedService<SessionPipeline>()
+                    services.AddHostedService<SessionsPipeline>()
                             .AddHostedService<MeetingPipeline>()
                 );
     }
