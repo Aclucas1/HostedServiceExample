@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BGTaskDemo
 {
-    public class SessionPipeline : IHostedService, IDisposable
+    public class MeetingPipeline : IHostedService, IDisposable
     {
         private Timer timer;
 
@@ -27,16 +27,16 @@ namespace BGTaskDemo
                 { // Callback for the timer
                     if (worker.ShouldRun())
                     {
-                        worker.DoWork("Session");
+                        worker.DoWork("Meeting");
                     }
                     else
                     {
-                        Console.WriteLine("Not time to work on Session");
+                        Console.WriteLine("Not time to work Meetings");
                     }
                 },
                 null, // not sure but example said leave null
                 TimeSpan.Zero, // basically means start immediately 
-                TimeSpan.FromSeconds(2) // How often should we check for work? 
+                TimeSpan.FromSeconds(1) // How often should we check for work? 
             );
             return Task.CompletedTask;
         }

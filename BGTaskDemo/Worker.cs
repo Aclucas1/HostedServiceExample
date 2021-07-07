@@ -14,9 +14,9 @@ namespace BGTaskDemo
         private int number = 0;
 
         // do the work for the update
-        public void DoWork()
+        public void DoWork(string pipeline)
         {
-            Console.WriteLine($"Run update logic here");
+            Console.WriteLine($"Run {pipeline} update logic here");
         }
 
         // is it time to run calculation base off last run data
